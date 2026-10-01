@@ -1,0 +1,22 @@
+# Build output
+dist/
+*.exe
+
+# Local measurement data (large, machine-specific)
+data/
+
+# One-off probes, superseded builds, backups
+archive/
+
+# Runtime logs
+*.log
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
+# Regression harness. These drive real user windows on a real desktop and
+# hardcode window titles, so they are kept local rather than published.
+tests/
