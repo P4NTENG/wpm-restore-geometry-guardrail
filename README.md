@@ -1,12 +1,22 @@
-# WPM Restore Geometry Guardrail
+> [!NOTE]
+> **This is a personal Windows window-geometry experiment, not malware.** It
+> reads and restores window rectangles and does nothing else. The complete set
+> of Win32 APIs it calls is listed below — 29 distinct calls, all in
+> `user32`/`shcore`. There is no network access, no registry access, no process
+> injection, no global hook, no input synthesis, no clipboard or credential
+> access, and no obfuscation. `wpm/wpm_v6.ahk` is included and builds from
+> source with `build/build.ps1`, so the binaries here can be rebuilt and
+> compared against this tag.
+>
+> The compiled binaries embed an AutoHotkey v2.0.21 runtime. On this machine
+> both were executed and scanned (Defender real-time + behaviour monitoring
+> enabled) with zero detections and no runtime interruption.
+>
+> If your AV flags this anyway, that is the known false-positive pattern for
+> AutoHotkey programs that hook window events. The source is the fastest way
+> to confirm it is benign.
 
-> Personal Windows window-geometry experiment. AutoHotkey v2, ~2200 lines of
-> readable source. It reads and restores window rectangles and nothing else:
-> **no network access, no registry read or write, no process injection, no
-> global keyboard/mouse hook, no keystroke or clipboard logging, no credential
-> access, no obfuscation.** The complete set of Windows APIs it calls is listed
-> below — it is 29 distinct calls, all in `user32`/`shcore`. Source is included and
-> builds from source with one script.
+# WPM Restore Geometry Guardrail
 
 Chrome이 FancyZones zone에서 최소화/복원될 때 너비가 `974 → 1016`으로 새는
 현상을, **최소화 직전 geometry를 baseline으로 잡고 복원 후 불일치할 때만
@@ -105,6 +115,14 @@ powershell -ExecutionPolicy Bypass -File build/build.ps1 -DebugBuild # debug
 산출물은 `dist/window_position_manager.exe`입니다. 빌드가 `PerMonitorV2`
 매니페스트를 exe에 주입합니다 — 이게 빠지면 크로스 모니터 DPI에서 좌표가
 어긋납니다.
+
+`Open Downloads.exe`(`Win+E` → Downloads 폴더)를 만들려면:
+
+```powershell
+& "C:\Program Files\AutoHotkey\Compiler\Ahk2Exe.exe" `
+  /in "wpm\Open Downloads.ahk" /out "dist\Open Downloads.exe" `
+  /base "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe" /silent verbose
+```
 
 ### 스모크
 
